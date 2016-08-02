@@ -1,11 +1,11 @@
 # Random Notes for the Birdy Board Mastery Exercise
 
 # Users Storage Model, list containing randomly generated integer for UID and strings of the names
-[RandomGenUID1, 'UserName', 'FullName']
-[RandomGenUID2, 'UserName', 'FullName']
-[RandomGenUID3, 'UserName', 'FullName']
-[RandomGenUID4, 'UserName', 'FullName']
-[RandomGenUID5, 'UserName', 'FullName']
+[RandomGenUID1, 'Name', 'Handle']
+[RandomGenUID2, 'Name', 'Handle']
+[RandomGenUID3, 'Name', 'Handle']
+[RandomGenUID4, 'Name', 'Handle']
+[RandomGenUID5, 'Name', 'Handle']
 
 # Public Chirps Storage Model, list of strings and integers for the 2 different IDs and dict of list of comments on given message
 
