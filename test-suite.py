@@ -6,13 +6,13 @@ class TestBirdy(unittest.TestCase):
   @classmethod
 
   def test_setupClass(self):
-    self.birdyboard = birdyboard.BirdyBoard()
+    self.birdyboard = birdyboard.Birdyboard()
 
   def test_user_creation(self):
     # test read/write capabilities
     name = 'Test Name'
     handle = 'Test Handle'
-    created_user = users.create_user(name, handle)
+    created_user = users.User(name, handle)
 
     self.assertEqual(created_user.name, 'Test Name')
     self.assertEqual(created_user.handle, 'Test Handle')

@@ -1,11 +1,12 @@
 import csv
-import sys
+import random
+import math
 from birdyboard import *
 
 class User:
 
-  def __init__(self):
-    pass
+  def __init__(self, name, handle):
+    self.name = name
+    self.handle = handle
 
-  def create_user(self, name, handle):
-    pass
+    self.UID = math.floor(random.random()*100000)
