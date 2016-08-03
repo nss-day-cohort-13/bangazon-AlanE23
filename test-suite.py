@@ -1,5 +1,6 @@
 import unittest
 import birdyboard
+import uuid
 import users
 import pickle
 
@@ -38,11 +39,12 @@ class TestBirdy(unittest.TestCase):
     name = 'Test Name'
     handle = 'Test Handle'
     created_user = users.User(name, handle)
+    receiver_uid = uuid.uuid4()
     chirp = Chirp(
                   message = 'Test Chirp'
                   user = created_user.user_UID
                   private = True
-
+                  receiver = receiver_uid
                   )
 
 
