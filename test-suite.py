@@ -1,6 +1,7 @@
 import unittest
 import birdyboard
 import users
+import pickle
 
 class TestBirdy(unittest.TestCase):
   @classmethod
@@ -16,19 +17,34 @@ class TestBirdy(unittest.TestCase):
 
     self.assertEqual(created_user.name, 'Test Name')
     self.assertEqual(created_user.handle, 'Test Handle')
-    self.assertEqual(len(str(created_user.UID)), 5)
+    self.assertIsNotNone(created_user.user_UID)
 
-  def test_newUserAdded(self):
-    # test on the length of the user object to ensure another one was successfully added
-    pass
+  def test_new_public_message(self):
+    name = 'Test Name'
+    handle = 'Test Handle'
+    created_user = users.User(name, handle)
+    chirp = Chirp(
+                  message = 'Test Chirp'
+                  user = created_user.user_UID
+                  private = False
+                  )
 
-  def test_newPubMessage(self):
-    # test on the length of the public message object to ensure another one was successfully added
-    pass
+    self.assertEqual(chirp.message, 'Test Chirp')
+    self.assertEqual(chirp.user_UID, created_user.user_UID)
+    self.assertEqual(chirp.private, False)
+    self.assertIsNotNone(chirp.chirp_id)
 
-  def test_newPrivMessage(self):
-    # test on the length of the private message object to ensure another one was successfully added
-    pass
+  def test_new_private_message(self):
+    name = 'Test Name'
+    handle = 'Test Handle'
+    created_user = users.User(name, handle)
+    chirp = Chirp(
+                  message = 'Test Chirp'
+                  user = created_user.user_UID
+                  private = True
+
+                  )
+
 
 if __name__ == '__main__':
     unittest.main()

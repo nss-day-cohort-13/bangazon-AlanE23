@@ -1,6 +1,6 @@
 import csv
-import random
-import math
+import uuid
+import pickle
 from birdyboard import *
 
 class User:
@@ -8,5 +8,7 @@ class User:
   def __init__(self, name, handle):
     self.name = name
     self.handle = handle
+    self.user_UID = uuid.uuid4()
 
-    self.UID = math.floor(random.random()*100000)
+
+
