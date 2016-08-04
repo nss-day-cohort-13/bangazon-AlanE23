@@ -78,7 +78,7 @@ class Birdyboard:
           print('Chirp Away Publicly')
           message = input('> ')
 
-          create_public_chirp(message)
+          create_public_chirp(message, user)
 
           self.chirp_menu()
 
