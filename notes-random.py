@@ -1,51 +1,5 @@
 # # Random Notes for the Birdy Board Mastery Exercise
 
-# # Users Storage Model, list containing randomly generated integer for UID and strings of the names
-# [RandomGenUID1, 'Name', 'Handle']
-# [RandomGenUID2, 'Name', 'Handle']
-# [RandomGenUID3, 'Name', 'Handle']
-# [RandomGenUID4, 'Name', 'Handle']
-# [RandomGenUID5, 'Name', 'Handle']
-
-# # Public Chirps Storage Model, list of strings and integers for the 2 different IDs and dict of list of comments on given message
-
-# [ChirpID, UID, 'Public', 'Chirp Message', {Comments: ['comment 1', 'comment 2']]
-# [ChirpID, UID, 'Public', 'Chirp Message', {Comments: ['comment 1', 'comment 2']]
-# [ChirpID, UID, 'Public', 'Chirp Message', {Comments: ['comment 1', 'comment 2']]
-# [ChirpID, UID, 'Public', 'Chirp Message', {Comments: ['comment 1', 'comment 2']]
-# [ChirpID, UID, 'Public', 'Chirp Message', {Comments: ['comment 1', 'comment 2']]
-
-# # Private Chirps Storage Model, list of strings and integers for the 2 different IDs
-
-# [ChirpID, UID of author, 'Private', UID of receiver, 'Chirp Message']
-# [ChirpID, UID of author, 'Private', UID of receiver, 'Chirp Message']
-# [ChirpID, UID of author, 'Private', UID of receiver, 'Chirp Message']
-# [ChirpID, UID of author, 'Private', UID of receiver, 'Chirp Message']
-# [ChirpID, UID of author, 'Private', UID of receiver, 'Chirp Message']
-
-# import csv
-
-# ifile  = open('users.csv', "r")
-# reader = csv.reader(ifile)
-
-# rownum = 0
-# for row in reader:
-#     # Save header row.
-#     if rownum == 0:
-#         header = row
-#     else:
-#         colnum = 0
-#         for col in row:
-#             print('%-6s: %s' % (header[colnum], col))
-#             colnum += 1
-
-#     rownum += 1
-
-# ifile.close()
-
-
-##############################################
-
 import unittest
 
 
@@ -133,3 +87,113 @@ class TestChirp(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+#######################################
+#Pickle Usage#
+#######################################
+
+import pickle
+
+class Notes:
+
+  def __init__(self):
+    self.all_notes = []
+    try:
+      self.deserialize()
+    except FileNotFoundError:
+      pass
+
+  def list_notes(self):
+    [
+      print(str(key) + ": " + note)
+      for key,note in enumerate(self.all_notes)
+    ]
+
+  def prompt(self):
+    note = input('Post your inane opinions here > ')
+
+    if note == 'ls':
+      self.list_notes()
+
+    elif note == 'rm':
+      self.list_notes()
+      deleted = input('Which one? > ')
+      del(self.all_notes[int(deleted)])
+
+    elif note != 'quit':
+      self.all_notes.append(note)
+      self.serialize()
+
+    if note != "quit":
+      self.prompt()
+
+  def serialize(self):
+    with open('notes.txt', 'wb+') as f:
+      pickle.dump(self.all_notes, f)
+
+    with open('notes.txt', 'rb') as f:
+      binary = f.read()
+
+  def deserialize(self):
+    try:
+      with open('notes.txt', 'rb+') as f:
+        self.all_notes = pickle.load(f)
+
+    except EOFError:
+      pass
+
+    return self.all_notes
+
+
+# import pickle
+
+# class Notes:
+
+#   def __init__(self):
+#     self.all_notes = []
+#     try:
+#       self.all_notes = self.deserialize()
+#     except FileNotFoundError:
+#       pass
+
+#   def list_notes(self):
+#     [
+#       print(str(key) + ": " + note)
+#       for key,note in enumerate(self.all_notes)
+#     ]
+
+#   def prompt(self):
+#     note = input("Enter quick note > ")
+
+#     if note == "ls":
+#       self.list_notes()
+
+#     elif note == "rm":
+#       self.list_notes()
+#       deleted = input("Which one? > ")
+#       del(self.all_notes[int(deleted)])
+
+#     elif note != "quit":
+#       self.all_notes.append(note)
+#       self.serialize()
+
+#     if note != "quit": self.prompt()
+
+#   def serialize(self):
+#     with open('notes.txt', 'wb+') as f:
+#       pickle.dump(self.all_notes, f)
+
+#     with open('notes.txt', 'rb') as f:
+#       binary = f.read()
+
+#     return binary
+
+
+#   def deserialize(self):
+#     try:
+#       with open('notes.txt', 'rb+') as f:
+#         self.all_notes = pickle.load(f)
+#     except EOFError:
+#       pass
+
+#     return self.all_notes
