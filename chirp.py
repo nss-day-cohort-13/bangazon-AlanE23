@@ -13,3 +13,4 @@ class Chirp:
     self.private = private
     self.receiver = receiver
     # convo = Convo(self.chirp_ID)
+    # Still trying to figure out when a conversation should be created
