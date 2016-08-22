@@ -197,3 +197,96 @@ class Notes:
 #       pass
 
 #     return self.all_notes
+
+def create_customer_menu():
+
+  global menu_display
+  global all_users
+  menu_display = False
+
+  os.system('cls' if os.name == 'nt' else 'clear')
+
+  print("Enter customer name")
+  name = input("> ")
+
+  print("Enter street address")
+  address = input("> ")
+
+  print("Enter city")
+  city = input("> ")
+
+  print("Enter state")
+  state = input("> ")
+
+  print("Enter postal code")
+  zipcode = input("> ")
+
+  print("Enter phone number")
+  phone = input("> ")
+
+  # Verify is working
+  user = User(name, address, city, state, zipcode, phone)
+  all_users[user.uuid.__str__()] = user #make this an add users function then serialize it
+  print(all_users)
+  serialization.serialize_users(all_users)
+  # will call function for instantiating new user, to be added later
+  cust_create_success(name)
+
+def cust_create_success(name):
+
+  os.system('cls' if os.name == 'nt' else 'clear')
+
+  print("We successfully added {} as a user.\n Press enter to continue.".format(name))
+  print("\n")
+  input("> ")
+  global menu_display
+  menu_display = True
+  start_menu()
+
+
+def choose_customer_menu():
+  menu_display = False
+  os.system('cls' if os.name == 'nt' else 'clear')
+  print("Which customer will be active?")
+  print("\n")
+
+  temp_user_thing = dict()
+  global all_users
+  counter = 1
+  for key, value in all_users.items():
+    print("{}. {}".format(counter, value.name))
+    temp_user_thing[counter] = value
+    counter += 1
+
+  # need to write statement to handle exceptions
+  user_choice = int(input("> "))
+  for key, value in temp_user_thing.items():
+    if key == user_choice:
+      global user_login
+      user_login = True
+      global current_user
+      current_user = value
+
+  start_menu()
+
+    # needs to call the function that pulls the rest of the customer information
+
+def create_pay_opt_menu():
+  os.system('cls' if os.name == 'nt' else 'clear')
+  print("Enter payment type (e.g. AmEx, Visa, Checking)")
+  pay_type = input("> ")
+
+  print("Enter account number")
+  account = input("> ")
+  # needs to run function to have user payment information added to file that holds that information
+  added_pay_opt_success(pay_type)
+
+def added_pay_opt_success(pay_type):
+  os.system('cls' if os.name == 'nt' else 'clear')
+
+  print("We successfully added {} as payment method. Press enter to continue.".format(pay_type))
+  print("\n")
+  input("> ")
+  global menu_display
+  menu_display = True
+  start_menu()

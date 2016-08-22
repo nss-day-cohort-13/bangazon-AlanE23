@@ -17,9 +17,9 @@ class TestChirp(unittest.TestCase):
     public_chirp = chirp.Chirp(
                               author = current_user.user_ID,
                               message = 'Test Message',
-                              private = False,
-
                               )
+    self.assertIsNotNone(public_chirp.author)
+    self.assertEqual(public_chirp.message, 'Test Message')
 
 
   # def test_new_public_chirp(self):

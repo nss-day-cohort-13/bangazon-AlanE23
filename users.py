@@ -1,6 +1,5 @@
 import uuid
 import pickle
-from chirp import *
 
 class User:
 
@@ -8,4 +7,3 @@ class User:
     self.name = name
     self.handle = handle
     self.user_ID = uuid.uuid4()
-

@@ -1,97 +1,136 @@
 import pickle
+import serialize
 from users import *
+from chirp import *
 
-class Birdyboard:
+user_list = {}
+chirp_list = {}
 
-  def __init__(self):
-    pass #deserialize everything here on load of program
+current_user = None
 
-  def main_menu(self):
+def app_start():
 
+  global user_list
+  user_list = serialize.deserialize('users.txt', user_list)
+
+  global chirp_list
+  chirp_list = serialize.deserialize('chirps.txt', chirp_list)
+  print(chirp_list)
+
+  main_menu()
+
+def main_menu():
+  global user_list
+  global current_user
+
+  print('\n')
+  print('*********************************')
+  print('** ~~~Welcome to Birdyboard~~~ **')
+  print('*********************************')
+  print('\n')
+
+  try:
+    print("Currently Logged in as: ", current_user.handle)
     print('\n')
-    print('*********************************')
-    print('** ~~~Welcome to Birdyboard~~~ **')
-    print('*********************************')
-    print('\n')
-
-    print('Enter an Integer Corresponding to an Option Below')
-    print('\n')
-    print("1. New User")
-    print("2. Existing User")
-    print("3. View Public Chirps")
-    print("4. Exit")
-    main_input = input("> ")
-
-    if int(main_input) > 0 and int(main_input) < 5:
-
-      if main_input == '1':
-
-        print('Type your given name')
-        name = input('> ')
-
-        print('Type your handle')
-        handle = input('> ')
-
-        new_user = User(name, handle)
-
-        self.chirp_menu()
-
-      elif main_input == '2':
-        # call function holding the select user menu
-        pass
-
-      elif main_input == '3':
-        # call view all public chirps function loading public chirps
-        pass
-
-      elif main_input == '4':
-        exit()
-
-    else:
-      print('Please enter 1 for New User, 2 for Existing User, or 3 to view all Public Chirps')
-      self.main_menu()
-
-  def chirp_menu(self):
-
-    print('\n')
-    print('Select One of the Options Below and Chirp Away')
-    print('\n')
-    print('1. Create Public Chirp')
-    print('2. Reply to a Specific Public Chirp')
-    print('3. Create Private Chirp')
-    print('4. View All Chirps')
-    print('5. Return to the Main Menu')
+  except:
+    print('Sign up or choose a user to chirp away')
     print('\n')
 
-    menu_input = input('> ')
+  print('Enter an Integer Corresponding to an Option Below')
+  print('\n')
+  print("1. New User")
+  print("2. Existing User")
+  print("3. View Public Chirps")
+  print("4. Create Chirp")
+  print("5. Exit")
+  main_input = input("> ")
 
-    if int(main_input) > 0 and int(main_input) < 5:
+  if int(main_input) > 0 and int(main_input) < 6:
 
-      if menu_input == '1':
-        print('Chirp Away Publicly')
-        message = input('> ')
+    if main_input == '1':
 
-        create_public_chirp(message)
+      print('Type your given name')
+      name = input('> ')
 
-        self.chirp_menu()
+      print('Type your handle')
+      handle = input('> ')
 
-      elif menu_input == '2':
-        # reply to public chirp function/menu
-        pass
+      user = User(name, handle)
+      user_list[int(user.user_ID)] = user
+      print(user_list)
+      serialize.serialize('users.txt', user_list)
 
-      elif menu_input == '3':
-        # private chirp function/menu
-        pass
+      main_menu()
 
-      elif menu_input == '4':
-        # view all chirps
-        pass
+    elif main_input == '2':
+      # call function holding the select user menu
+      print('Select a user')
+      print("\n")
 
-      elif menu_input == '5':
-        self.main_menu()
+      temp_user_list = dict()
+      counter = 1
+      for key, value in user_list.items():
+        print("{}. {}".format(counter, value.handle))
+        temp_user_list[counter] = value
+        counter += 1
 
-    else:
-      print('Please Choose Between Options 1, 2, 3, 4, or 5')
-      self.chirp_menu()
+      user_choice = int(input("> "))
+      for key, value in temp_user_list.items():
+        if key == user_choice:
+          current_user = value
+
+      main_menu()
+
+    elif main_input == '3':
+      # call view all public chirps function loading public chirps
+      print('\n')
+      print("Behold all of the mind bending chirps, peasant")
+      print('\n')
+
+
+
+      ticker = 1
+      for key, value in chirp_list.items():
+        print("{}. {}".format(ticker, value.message))
+
+      main_menu()
+
+    elif main_input == '4':
+      print('Chirp away')
+
+      user_input = input('> ')
+
+      chirp = Chirp(current_user, user_input)
+      chirp_list[int(chirp.chirp_ID)] = chirp
+
+      print(chirp_list)
+      serialize.serialize('chirps.txt', chirp_list)
+
+      main_menu()
+
+    elif main_input == '5':
+      exit()
+
+  else:
+    print('Please select a valid option')
+    main_menu()
+
+app_start()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

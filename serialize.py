@@ -1,9 +1,4 @@
 import pickle
-from users import *
-from public_chirps import *
-from private_chirps import *
-from convos import *
-
 
 def serialize(filename, content):
   '''Serialization function that takes 2 arguements,
@@ -14,7 +9,7 @@ def serialize(filename, content):
 
 def deserialize(filename, content):
   '''Serialization function that takes 2 arguements,
-     the filename and the content to be serialized'''
+     the filename and the content to be deserialized'''
 
   try:
     with open(filename, 'rb+') as file:
@@ -22,3 +17,5 @@ def deserialize(filename, content):
 
   except EOFError:
     content = {}
+
+  return content
